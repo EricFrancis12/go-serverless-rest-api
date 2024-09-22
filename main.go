@@ -29,9 +29,9 @@ func init() {
 		w.Write([]byte("hello from /ping"))
 	})
 
-	router.HandleFunc("/ping/demo", func(w http.ResponseWriter, r *http.Request) {
+	router.HandleFunc("/ping/yes", func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
-		w.Write([]byte("hello from /ping/demo"))
+		w.Write([]byte("hello from /ping/yes"))
 	})
 
 	muxLambda = muxadapter.New(router)

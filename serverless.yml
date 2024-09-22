@@ -10,14 +10,8 @@ functions:
     handler: bootstrap
     events:
       - http:
-          path: /
-          method: GET
-      - http:
-          path: /ping
-          method: GET
-      - http:
-          path: /ping/demo
-          method: GET
+          path: /{proxy+}
+          method: ANY
 package:
   patterns:
     - "!*/**"
