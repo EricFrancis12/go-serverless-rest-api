@@ -5,9 +5,13 @@ provider:
   runtime: provided.al2
   region: us-east-1
   stage: ${opt:stage}
+plugins:
+  - serverless-dotenv-plugin
 functions:
   api:
     handler: bootstrap
+    environment:
+      RUNNING_FROM_SERVERLESS: "true"
     events:
       - http:
           path: /{proxy+}

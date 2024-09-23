@@ -2,8 +2,10 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"net/http"
+	"os"
 
 	"github.com/aws/aws-lambda-go/lambda"
 	"github.com/awslabs/aws-lambda-go-api-proxy/core"
@@ -32,6 +34,18 @@ func init() {
 	router.HandleFunc("/ping/yes", func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
 		w.Write([]byte("hello from /ping/yes"))
+	})
+
+	router.HandleFunc("/serverless-env", func(w http.ResponseWriter, r *http.Request) {
+		rfs := os.Getenv("RUNNING_FROM_SERVERLESS")
+		if rfs != "true" {
+			rfs = "false"
+		}
+
+		someEnv := os.Getenv("SOME_ENV")
+
+		w.WriteHeader(http.StatusOK)
+		w.Write([]byte(fmt.Sprintf(`{ "runningFromServerless": %s, "someEnv": "%s" }`, rfs, someEnv)))
 	})
 
 	muxLambda = muxadapter.New(router)
